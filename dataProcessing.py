@@ -48,7 +48,7 @@ df = pd.concat([fictional_names, real_names], ignore_index=True)
 # Save balanced reference lists
 pd.DataFrame(reference_real, columns=['Name']).to_csv("Balanced_Real_Reference_List.csv", index=False)
 pd.DataFrame(reference_fictional, columns=['Name']).to_csv("Balanced_Fictional_Reference_List.csv", index=False)
-df.to_csv("MainDataset.csv", index=False)
+df.to_csv("MainDataset2.csv", index=False)
 
 print(f"✅ Reference lists balanced: {len(reference_real)} real, {len(reference_fictional)} fictional.")
 print(f"📌 Final dataset size: {len(df)}")

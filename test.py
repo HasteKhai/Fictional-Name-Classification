@@ -46,7 +46,6 @@ def predict_fictionality(name):
 
 # Example Prediction
 print(predict_fictionality("Hello Kitty"))
-print(predict_fictionality("Froddo Baggins"))
 print(predict_fictionality("SpiderMan Smith"))
 print(predict_fictionality("Wolf Heimer"))
 print(predict_fictionality("Knee Ellen"))
@@ -59,7 +58,7 @@ print(predict_fictionality("Annie Ngo"))
 print(predict_fictionality("Bat man"))
 print(predict_fictionality("Boot man"))
 print(predict_fictionality("Apple Juice"))
-print(predict_fictionality("Timothy Smay"))
+print(predict_fictionality("Donald Trump"))
 print(predict_fictionality("Christina Perez"))
 print(predict_fictionality("Alexandre Gagnon"))
 print(predict_fictionality("Jack Sparrow"))
@@ -69,10 +68,10 @@ print(predict_fictionality("Ai Wan Tyu"))
 print(predict_fictionality("Youssef Hamza"))
 print(predict_fictionality("Sonia Creo"))
 print(predict_fictionality("Mary Wang"))
-print(predict_fictionality("Shawn Mendez"))
-print(predict_fictionality("Song Wang"))
+print(predict_fictionality("Vladimir Kosov"))
+print(predict_fictionality("Vladimir Putin"))
 print(predict_fictionality("Affan Pazheri"))
-print(predict_fictionality("YanTao Wang"))
+print(predict_fictionality("Yuen Tao Wang"))
 
 # Get feature importance scores
 feature_importance = model.feature_importances_

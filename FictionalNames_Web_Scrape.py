@@ -12,7 +12,7 @@ HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 # Store visited categories and character pages
 visited_categories = set()
-character_pages = []
+character_list = []
 
 def scrape_wikipedia_category(start_url, max_depth=5):
     """Iteratively scrapes Wikipedia category pages using BFS."""
@@ -45,15 +45,15 @@ def scrape_wikipedia_category(start_url, max_depth=5):
         # Extract character pages
         character_links = data.select("#mw-pages a")
         for link in character_links:
-            if len(character_pages) == 30000:
+            if len(character_list) == 30000:
                 break
             if "href" in link.attrs:
                 char_name = clean_name(link.text)
                 if (char_name == "This list may not reflect recent changes" or "List of" in char_name or
                         "Lists of" in char_name or 'Character' in char_name or '0' in char_name):
                     continue
-                if not character_pages.__contains__(char_name):
-                    character_pages.append(char_name)
+                if not character_list.__contains__(char_name):
+                    character_list.append(char_name)
                 print(" " * depth * 2 + f"--> Found character: {char_name}")
 
 # Scrape the Wikipedia Page
@@ -61,10 +61,10 @@ start_url = "https://en.wikipedia.org/wiki/Category:Fictional_characters"
 scrape_wikipedia_category(start_url)
 
 # Save results
-for name in character_pages:
+for name in character_list:
     print(f"{name}")
 
-print(pd.DataFrame(character_pages, columns=['Character Name']))
+print(pd.DataFrame(character_list, columns=['Character Name']))
 
-df = pd.DataFrame(character_pages, columns=['Name'])
+df = pd.DataFrame(character_list, columns=['Name'])
 df.to_csv('Fictional_Names.csv', index=False)

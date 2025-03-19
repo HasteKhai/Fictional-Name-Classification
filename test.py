@@ -33,7 +33,7 @@ def predict_fictionality(name):
 
     # Predict with RandomForestClassifier
     print("\n📌 **Name Analysis:**", name)
-    print(f"🔹 Fict Prob:                         {prob_fictional}")
+    print(f"🔹 Suspicious Probability:            {prob_fictional}")
     print(f"🔹 Levenshtein Distance (Real):       {lev_real}")
     print(f"🔹 Levenshtein Distance (Fictional):  {lev_fictional}")
     print(f"🔹 Fuzzy Matching (Real):             {fuzzy_real}")
@@ -41,48 +41,47 @@ def predict_fictionality(name):
     print(f"🔹 DMetaphone Match (Real):           {'✅ Match' if doublemetaphone_real else '❌ No Match'}")
     print(f"🔹 DMetaphone Match (Fictional):      {'✅ Match' if doublemetaphone_fict else '❌ No Match'}")
     print(f"🔹 Contains a Dictionnary Word:       {dict_word}")
-    return 'Fictional' if prediction == 1 else 'Non-Fictional'
+    return 'Suspicious' if prediction == 1 else 'Not Suspicious'
 
 
 # Example Prediction
-print(predict_fictionality("John Wick"))
-print(predict_fictionality("SpiderMan Smith"))
-print(predict_fictionality("Wolf Heimer"))
-print(predict_fictionality("Knee Ellen"))
-print(predict_fictionality("Mickey Mouse"))
-print(predict_fictionality("Mickey Mousse"))
-print(predict_fictionality("Harry Potter"))
-print(predict_fictionality("Ice Queen"))
-print(predict_fictionality("Tao Tao"))
-print(predict_fictionality("Annie Ngo"))
-print(predict_fictionality("Bat man"))
-print(predict_fictionality("Boot man"))
-print(predict_fictionality("Apple Juice"))
-print(predict_fictionality("Donald Trump"))
-print(predict_fictionality("Christina Perez"))
-print(predict_fictionality("Alexandre Gagnon"))
-print(predict_fictionality("Jack Sparrow"))
-print(predict_fictionality("Eric Brault"))
-print(predict_fictionality("Kane Yu-Kis Mi"))
-print(predict_fictionality("Ai Wan Tyu"))
-print(predict_fictionality("Youssef Hamza"))
-print(predict_fictionality("Sonia Creo"))
-print(predict_fictionality("Mary Wang"))
-print(predict_fictionality("Vladimir Kosov"))
-print(predict_fictionality("Vladimir Putin"))
-print(predict_fictionality("Affan Pazheri"))
-print(predict_fictionality("Yuen Tao Wang"))
-print(predict_fictionality("John Doe"))
-print(predict_fictionality("John Cena"))
+names = [
+    "John Wick",
+    "SpiderMan Smith",
+    "Wolf Heimer",
+    "Knee Ellen",
+    "Mickey Mouse",
+    "Mickey Mousse",
+    "Harry Potter",
+    "Ice Queen",
+    "Tao Tao",
+    "Annie Ngo",
+    "Bat man",
+    "Boot man",
+    "Apple Juice",
+    "Donald Trump",
+    "Christina Perez",
+    "Alexandre Gagnon",
+    "Jack Sparrow",
+    "Eric Brault",
+    "Kane Yu-Kis Mi",
+    "Ai Wan Tyu",
+    "Youssef Hamza",
+    "Sonia Creo",
+    "Mary Wang",
+    "Vladimir Kosov",
+    "Vladimir Putin",
+    "Affan Pazheri",
+    "Yuen Tao Wang",
+    "John Doe",
+    "John Cena",
+    "Tiger Woods",
+    "Nelson Mandela",
+    "Kobe Bryant",
+    "Ching Chong"
+]
 
-# Get feature importance scores
-feature_importance = model.feature_importances_
-feature_names = ['levenshtein_real', 'levenshtein_fictional', 'fuzzy_real', 'fuzzy_fictional',
-                 'double_metaphone_real', 'double_metaphone_fictional', 'is_dictionary_word']
+for name in names:
+    print(predict_fictionality(name))
 
-# Sort feature importances in descending order
-sorted_features = sorted(zip(feature_names, feature_importance), key=lambda x: x[1], reverse=True)
 
-# Print feature importance scores
-for feature, importance in sorted_features:
-    print(f"{feature}: {importance:.4f}")

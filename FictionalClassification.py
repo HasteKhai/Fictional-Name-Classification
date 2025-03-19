@@ -127,3 +127,15 @@ if __name__ == "__main__":
     #
     # train_acc = model.score(X_train, y_train)
     # test_acc = model.score(X_test, y_test)
+
+    # Get feature importance scores
+    feature_importance = model.feature_importances_
+    feature_names = ['levenshtein_real', 'levenshtein_fictional', 'fuzzy_real', 'fuzzy_fictional',
+                     'double_metaphone_real', 'double_metaphone_fictional', 'is_dictionary_word']
+
+    # Sort feature importances in descending order
+    sorted_features = sorted(zip(feature_names, feature_importance), key=lambda x: x[1], reverse=True)
+
+    # Print feature importance scores
+    for feature, importance in sorted_features:
+        print(f"{feature}: {importance:.4f}")

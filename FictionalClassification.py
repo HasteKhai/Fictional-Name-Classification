@@ -76,6 +76,8 @@ if __name__ == "__main__":
     df['fuzzy_real'] *= 0.85
     df['fuzzy_fictional'] *= 0.75
     df.loc[df['is_proper_noun'] == 1, ['fuzzy_real', 'levenshtein_real']] *= 1.5
+    df.loc[df['levenshtein_real'] > df['levenshtein_fictional'], ['fuzzy_real']] *= 1.1
+    df.loc[df['fuzzy_real'] > df['fuzzy_fictional'], ['fuzzy_real']] *= 1.5
 
     # GirdSearch on RF
     param_grid = {

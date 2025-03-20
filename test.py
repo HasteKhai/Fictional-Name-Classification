@@ -95,14 +95,14 @@ non_legit_names = [
     "Isla Whitmore", "Nicolette Fontaine", "Theodore Winslow",
 
     # Completely Random / Absurd Names
-    "Xyphor Ragnok", "Zephyrus Stormrage", "Neon Void", "Galaxian Darkblade",
-    "Thalor Nightbane", "Velkan Starforge", "Zenthrax Bloodfang", "Arkanis Shadowmere",
+    "Accounts Payable", "Ching Chong", "Bomboclat", "I love you",
+    "M. Taylor", "Velkan Starforge", "Zenthrax Bloodfang", "Arkanis Shadowmere",
     "Drax Silvermoon", "Nyx Everdusk", "Vexxion Nightfall", "Zephyr Windwhisper",
     "Talon Emberfang", "Orion Moonshadow", "Kaelith Starborn", "Axel Ragnarok",
     "Mordecai Hellscream", "Shadowfang Evergloom", "Eryndor Blackthorn", "Krynn Valeria"
 ]
 
-for name in legit_names:
+for name in non_legit_names:
     print(predict_fictionality(name))
 
 

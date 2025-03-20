@@ -38,10 +38,14 @@ english_words = set(words.words())
 nltk.download('punkt_tab')
 
 
-# Tokenization better than .split(), avoiding issues with splitting punctuations and special characters
-def is_dictionary_word(name):
-    tokens = word_tokenize(name.lower())
-    return int(any(word in english_words for word in tokens))
+import spacy
+nlp = spacy.load("en_core_web_sm")
+def is_proper_noun(name):
+    doc = nlp(name)
+    return any(token.pos_ == "PROPN" for token in doc)
+
+
+
 
 
 if __name__ == "__main__":
@@ -67,11 +71,11 @@ if __name__ == "__main__":
     df['double_metaphone_fictional'] = (df['Name'].swifter.progress_bar(True).
                                         apply(lambda x: double_metaphone_match(x, reference_fictional_metaphone)))
 
-    df['is_dictionary_word'] = df['Name'].apply(is_dictionary_word)
+    df['is_proper_noun'] = df['Name'].apply(is_proper_noun)
 
     df['fuzzy_real'] *= 0.85
     df['fuzzy_fictional'] *= 0.75
-    df.loc[df['is_dictionary_word'] == 1, ['fuzzy_real', 'levenshtein_real']] *= 1.5
+    df.loc[df['is_proper_noun'] == 1, ['fuzzy_real', 'levenshtein_real']] *= 1.5
 
     # GirdSearch on RF
     param_grid = {
@@ -82,7 +86,7 @@ if __name__ == "__main__":
     }
 
     X = df[['levenshtein_real', 'levenshtein_fictional', 'fuzzy_real', 'fuzzy_fictional',
-            'double_metaphone_real', 'double_metaphone_fictional', 'is_dictionary_word']]
+            'double_metaphone_real', 'double_metaphone_fictional', 'is_proper_noun']]
     y = df['Label']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -131,7 +135,7 @@ if __name__ == "__main__":
     # Get feature importance scores
     feature_importance = model.feature_importances_
     feature_names = ['levenshtein_real', 'levenshtein_fictional', 'fuzzy_real', 'fuzzy_fictional',
-                     'double_metaphone_real', 'double_metaphone_fictional', 'is_dictionary_word']
+                     'double_metaphone_real', 'double_metaphone_fictional', 'is_proper_noun']
 
     # Sort feature importances in descending order
     sorted_features = sorted(zip(feature_names, feature_importance), key=lambda x: x[1], reverse=True)

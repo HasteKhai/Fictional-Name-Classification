@@ -37,15 +37,33 @@ english_words = set(words.words())
 
 nltk.download('punkt_tab')
 
-
 import spacy
-nlp = spacy.load("en_core_web_sm")
+
+nlp_models = {
+    "en": spacy.load("en_core_web_sm"),  # English
+    "fr": spacy.load("fr_core_news_sm"),  # French
+    "es": spacy.load("es_core_news_sm"),  # Spanish
+    "ru": spacy.load("ru_core_news_sm"),  # Russian
+    "multi": spacy.load("xx_ent_wiki_sm")  # Multi Language
+}
+
+from langdetect import detect
+
+
+def detect_language(text):
+    """Detect language using langdetect."""
+    try:
+        return detect(text)  # Returns "en", "fr", "es", etc.
+    except:
+        return "en"  # Default to English if detection fails
+
+
 def is_proper_noun(name):
+    lang = detect_language(name)
+    nlp = nlp_models.get(lang, nlp_models["en"])  # Default to English if language is unknown
+
     doc = nlp(name)
     return any(token.pos_ == "PROPN" for token in doc)
-
-
-
 
 
 if __name__ == "__main__":
@@ -71,13 +89,13 @@ if __name__ == "__main__":
     df['double_metaphone_fictional'] = (df['Name'].swifter.progress_bar(True).
                                         apply(lambda x: double_metaphone_match(x, reference_fictional_metaphone)))
 
-    df['is_proper_noun'] = df['Name'].apply(is_proper_noun)
+    df['is_proper_noun'] = df['Name'].swifter.progress_bar(True).apply(is_proper_noun)
 
     df['fuzzy_real'] *= 0.85
-    df['fuzzy_fictional'] *= 0.75
+    df['fuzzy_fictional'] *= 0.7
     df.loc[df['is_proper_noun'] == 1, ['fuzzy_real', 'levenshtein_real']] *= 1.5
-    df.loc[df['levenshtein_real'] > df['levenshtein_fictional'], ['fuzzy_real']] *= 1.1
-    df.loc[df['fuzzy_real'] > df['fuzzy_fictional'], ['fuzzy_real']] *= 1.5
+    df.loc[df['double_metaphone_real'] == 1, ['fuzzy_real', 'levenshtein_real']] *= 1.5
+
 
     # GirdSearch on RF
     param_grid = {

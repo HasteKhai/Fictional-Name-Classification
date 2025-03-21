@@ -28,7 +28,7 @@ def predict_fictionality(name):
     prob_fictional = model.predict_proba(features)[0][1]
 
     # Set a threshold
-    threshold = 0.85
+    threshold = 0.9
     prediction = 1 if prob_fictional >= threshold else 0
 
     # Predict with RandomForestClassifier
@@ -45,64 +45,67 @@ def predict_fictionality(name):
 
 
 # Example Prediction
-legit_names = [
-    "James Smith", "Maria Garcia", "Robert Johnson", "Emily Brown", "John Williams",
-    "David Jones", "Michael Miller", "William Davis", "Joseph Martinez", "Charles Anderson",
-    "Daniel Lee", "Matthew Taylor", "Anthony Thomas", "Christopher Harris", "Andrew Clark",
-    "Joshua Lewis", "Alexander Walker", "Sophia Young", "Olivia Hall", "Benjamin Allen",
-    "Isabella Hernandez", "Mason King", "Ethan Wright", "Liam Scott", "Emma Green",
-    "Lucas Adams", "Charlotte Baker", "Henry Nelson", "Amelia Carter", "Sebastian Mitchell",
-    "Ava Perez", "Samuel Roberts", "Harper Turner", "Jack Phillips", "Evelyn Campbell",
-    "Daniel Rodriguez", "Chloe Parker", "Nathan Moore", "Madison Evans", "Jonathan Edwards",
-    "Grace Collins", "David Stewart", "Zoey Rivera", "Christopher Sanchez", "Julian Flores",
-    "Elijah Gomez", "Victoria Butler", "Noah Murphy", "Hannah Bryant", "Caleb Cooper",
-    "Scarlett Hughes", "Isaac Russell", "Lillian Griffin", "Gabriel Peterson", "Sophie Fisher",
-    "Nathaniel Powell", "Brooklyn Kim", "Aaron Sanders", "Leah Morris", "Owen Watson",
-    "Eleanor Price", "Hunter Torres", "Violet Richardson", "Eli Wood", "Penelope Brooks",
-    "Xavier Bennett", "Aria Gray", "Adam Barnes", "Natalie Long", "Miles Foster",
-    "Savannah Bailey", "Christian Jenkins", "Addison Perry", "Dominic Howard", "Zoe Bell",
-    "Leo Ross", "Paisley Morgan", "Hudson Scott", "Delilah Bailey", "Carson Reed",
-    "Aurora Cooper", "Elias Ward", "Gabriella Rogers", "Everett Cox", "Camila Adams",
-    "Micah Simmons", "Lucy Butler", "Landon Price", "Autumn Powell", "Roman Stewart",
-    "Clara Bryant", "Jameson Nguyen", "Juliette Myers", "Easton Bennett", "Hazel Foster",
-    "Weston Bailey", "Piper Sanders", "Maxwell Jenkins", "Adeline Ramirez", "Beckett Torres",
-    "Lydia Gray", "Zane Reed", "Sienna Sullivan", 'Mary Wang', 'Affan Pazheri', 'Laure Colins',
-    'Laure Collins', 'Yuen PAO Wang', 'Justin Trudeau', 'Jimmy Carter', 'Berny Sanderz'
+global_names = [
+    # Vietnamese Names
+    "Nguyen Van A", "Tran Thi Bich", "Le Hoang Nam", "Pham Minh Anh", "Hoang Thanh Tung",
+    "Doan Hai Dang", "Bui Ngoc Han", "Vo Quoc Bao", "Dang Van Dung", "Ta Thi Mai",
+
+    # Chinese Names
+    "Wang Wei", "Zhang Li", "Chen Jie", "Liu Yang", "Huang Mei",
+    "Zhao Min", "Xu Feng", "Sun Lei", "Deng Rong", "Gao Yan",
+
+    # Korean Names
+    "Kim Min-Jae", "Lee Ji-Eun", "Park Ji-Hoon", "Choi Soo-Young", "Jung Hye-Jin",
+    "Kang Dong-Won", "Yoon Seo-Jin", "Shin Hye-Sung", "Song Joon-Ki", "Ryu Hwa-Young",
+
+    # Indian Names
+    "Amit Sharma", "Priya Kapoor", "Rajesh Kumar", "Neha Patel", "Suresh Reddy",
+    "Deepika Nair", "Ananya Iyer", "Ravi Srinivasan", "Meera Choudhary", "Tarun Gupta",
+
+    # Arabic Names
+    "Mohammed Al-Farsi", "Aisha Khalid", "Omar Nasser", "Layla Hussein", "Yusuf Rahman",
+    "Fatima Al-Mansoori", "Khalid Ibrahim", "Zainab Ahmed", "Hassan Karim", "Samira Hafez",
+
+    # Russian Names
+    "Dmitry Ivanov", "Natalia Petrova", "Sergey Smirnov", "Ekaterina Sokolova", "Alexei Orlov",
+    "Anna Pavlova", "Viktor Kuznetsov", "Olga Morozova", "Nikolai Fedorov", "Elena Volkova",
+
+    # French Names
+    "Jean Dupont", "Camille Bernard", "Louis Moreau", "Isabelle Laurent", "Pierre Lefevre",
+    "Sophie Dubois", "Antoine Rousseau", "Juliette Girard", "Mathieu Fournier", "Clara Chevalier",
+
+    # Spanish Names
+    "Carlos Fernández", "Isabella Ramirez", "José López", "Ana Sánchez", "Francisco Torres",
+    "Lucia Moreno", "Miguel Herrera", "Carmen Castillo", "Santiago Vargas", "Maria Gonzalez",
+
+    # German Names
+    "Johannes Müller", "Klara Schmidt", "Lukas Fischer", "Hannah Weber", "Felix Wagner",
+    "Sophia Hoffmann", "Sebastian Becker", "Lea Schulz", "Niklas Richter", "Mia Schneider",
+
+    # Italian Names
+    "Giovanni Rossi", "Francesca Ricci", "Luca Conti", "Giulia Bianchi", "Matteo Greco",
+    "Elena Romano", "Alessandro Ferrara", "Valentina Rizzo", "Davide Moretti", "Aurora Gallo",
+
+    # African Names
+    "Kwame Mensah", "Fatou Diop", "Tendai Chikore", "Adebola Okafor", "Lerato Mthembu",
+    "Abdoulaye Ndiaye", "Zuberi Juma", "Ayaan Mohamed", "Nia Kamau", "Moussa Diallo",
 ]
 
-non_legit_names = [
-    # Famous Fictional Characters
-    "Bruce Wayne", "Clark Kent", "Peter Parker", "Tony Stark", "Walter White",
-    "Sherlock Holmes", "Frodo Baggins", "Darth Vader", "Luke Skywalker", "Indiana Jones",
-    "James Bond", "Homer Simpson", "Bart Simpson", "Marge Simpson", "Rick Sanchez",
-    "Morty Smith", "Bugs Bunny", "Daffy Duck", "Scooby Doo", "Shrek",
-    "Donkey", "SpongeBob SquarePants", "Mickey Mouse", "Jack Sparrow", "Harry Potter",
 
-    # Meme / Joke Names
-    "Joe Mama", "Hugh Jass", "Ben Dover", "Mike Hunt", "Al Beback",
-    "Anita Bath", "Seymour Butts", "Rick O’Shea", "Pat Myback", "Bob Loblaw",
-    "Ima Pigg", "Ivana Tinkle", "Moe Lester", "Dixie Normous", "Major Wood",
-
-    # Fantasy / Sci-Fi Inspired Names
-    "Zyler Vex", "Ronan Drakos", "Kai Zenth", "Nova Quinn", "Ezra Volante",
-    "Xander Nyx", "Seraphina Lux", "Orin Vale", "Lyric Noir", "Artemis Riven",
-    "Caspian Thorn", "Selene Nightshade", "Zayden Crowe", "Astra Bellamy", "Vesper Lin",
-
-    # Slightly Realistic but Still Fictional Names
-    "Elliot Graves", "Derek Caldwell", "Julian Mercer", "Amelia Vaughn",
-    "Silas Montgomery", "Rosalind Faulkner", "Lillian Hawthorne", "Maximillian Stokes",
-    "Eleanor Sterling", "Damian Everly", "Celeste Holloway", "Vincent Langley",
-    "Isla Whitmore", "Nicolette Fontaine", "Theodore Winslow",
-
-    # Completely Random / Absurd Names
-    "Accounts Payable", "Ching Chong", "Bomboclat", "I love you",
-    "M. Taylor", "Velkan Starforge", "Zenthrax Bloodfang", "Arkanis Shadowmere",
-    "Drax Silvermoon", "Nyx Everdusk", "Vexxion Nightfall", "Zephyr Windwhisper",
-    "Talon Emberfang", "Orion Moonshadow", "Kaelith Starborn", "Axel Ragnarok",
-    "Mordecai Hellscream", "Shadowfang Evergloom", "Eryndor Blackthorn", "Krynn Valeria"
+weird_names = [
+    "Toilet Seat", "Expired Milk", "404 Not Found", "XXx_EliteSniper_xX", "Unnamed User",
+    "Password123", "John Doe", "No Signal", "Baby Shark", "Captain Obvious",
+    "Error Message", "First Name Last Name", "Null Void", "Just Some Guy",
+    "Burger McFries", "Banana Hammock", "Wifi Password", "Ima Robot",
+    "Duck Quackington", "Doctor Strange Love", "Lord Voldemort Jr.",
+    "Extra Chromosome", "Yolo Swaggins", "Sir Lancelot of Camelot",
+    "Gucci FlipFlop", "Lil Test Tube", "McLovin", "Coconut Head",
+    "Dank Memer", "Zeus Almighty", "Sir Fartsalot", "Google Translate",
+    "Emoji Overlord", "Captain Planet", "Chairman Meow", "Sith Lord Karen"
 ]
 
-for name in non_legit_names:
+
+for name in weird_names:
     print(predict_fictionality(name))
 
 

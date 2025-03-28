@@ -107,5 +107,3 @@ weird_names = [
 
 for name in global_names:
     print(predict_fictionality(name))
-
-
